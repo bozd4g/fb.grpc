@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func New() IApplication {
+func NewApplication() IApplication {
 	return &Application{}
 }
 
@@ -27,7 +27,7 @@ func (application *Application) Build() IApplication {
 	return application
 }
 
-func (application *Application) Run() error {
+func (application *Application) Run() {
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
@@ -37,6 +37,4 @@ func (application *Application) Run() error {
 	if err != nil {
 		panic(err)
 	}
-
-	return err
 }

@@ -11,7 +11,7 @@ func New(repository userrepository.IUserRepository) IUserService {
 	return UserService{repository: repository}
 }
 
-func (service UserService) Create(userDto UserDto) error {
+func (service UserService) Create(userDto UserCreateRequestDto) error {
 	var entity user.Entity
 	err := mapstructure.Decode(userDto, &entity)
 	if err != nil {
@@ -34,9 +34,14 @@ func (service UserService) GetAll() ([]UserDto, error) {
 		return dtos, err
 	}
 
-	err = mapstructure.Decode(users, &dtos)
-	if err != nil {
-		return dtos, err
+	for _, entity := range users {
+		dtos = append(dtos, UserDto{
+			Id:       entity.Id.String(),
+			Name:     entity.Name,
+			Surname:  entity.Surname,
+			Email:    entity.Email,
+			Password: entity.Password,
+		})
 	}
 
 	return dtos, nil

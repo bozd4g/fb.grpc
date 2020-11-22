@@ -20,9 +20,12 @@ import (
 // @host localhost:8080
 // @BasePath /
 func main() {
-	application := app.New()
-	err := application.Build().Run()
+	application := app.NewApplication()
+	go application.Build().Run()
+
+	grpcService := app.NewGrpcApplication()
+	err := grpcService.BuildGrpc().RunGrpc()
 	if err != nil {
-		panic(fmt.Sprintf("app cannot be started! Error %+v", err))
+		panic(fmt.Sprintf("gRPC service cannot be started! Error %+v", err))
 	}
 }

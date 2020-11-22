@@ -1,0 +1,32 @@
+syntax = "proto3";
+option go_package = ".;userservice";
+
+package userservice;
+service UserService {
+  rpc Create (CreateRequest) returns (CreateReply) {}
+  rpc GetAll (GetAllRequest) returns (GetAllReply) {}
+}
+
+// Create
+message CreateRequest {
+  string name = 1;
+  string surname = 2;
+  string email = 3;
+  string password = 4;
+}
+message CreateReply {
+  int32 statusCode = 1;
+}
+
+// GetAll
+message GetAllRequest {}
+message GetAllReply {
+  int32 statusCode = 1;
+  repeated UserDtoReply users = 2;
+}
+message UserDtoReply {
+  string id = 1;
+  string name = 2;
+  string surname = 3;
+  string email = 4;
+}
